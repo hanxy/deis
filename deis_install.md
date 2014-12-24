@@ -112,14 +112,20 @@ deis paas的环境部署
     
 在gitblit分别将上述工程创建，找某台虚拟机进行并clone到本地，然后将github工程删除掉.git文件以后全部copy到对应的本地git工程，并push到服务器如下
     
-    git clone https://github.com/heroku/heroku-buildpack-java.git  
+    git clone https://github.com/heroku/heroku-buildpack-java.git
+    
     cd heroku-buildpack-java
+    
     rm .
     
     git clone http://10.27.36.105:8080/r/heroku-buildpack-java.git
+    
     mv * ../heroku-buildpack-java
+    
     git add .
+    
     git commit -m "update codes"
+    
     git push origin master
     
 7.修改编译buildpack源代码
@@ -142,10 +148,13 @@ deis paas的环境部署
      && chmod +x /usr/local/bin/etcdctl
     
 3).修改slugbuilder,slugrunner
+
      FROM progrium/cedarish ===> FROM 10.19.95.125:5000/progrium/cedarish:latest
   
 4). 修改boot文件,根据需要修改镜像设置
+
     spawn a docker daemon to run builds
+    
     docker -d --storage-driver=$STORAGE_DRIVER --bip=172.19.42.1/16 --insecure-registry 10.0.0.0/8 --insecure-registry
     172.16.0.0/12 --insecure-registry 10.27.36.0/24 --insecure-registry 10.19.95.0/24 & 
     
@@ -155,10 +164,31 @@ deis paas的环境部署
 
 8.同步时间服务器
 ====================
-    sudo systemctl stop ntpd; sudo ntpdate -s 192.168.118.201;sudo systemctl start ntpd
-    ntpq -p如果出现同步信息表示正确
 
-9.部署deis
+    sudo systemctl stop ntpd; sudo ntpdate -s 192.168.118.201;sudo systemctl start ntpd
+    
+    ntpq -p如果出现同步信息表示正确
+    
+    
+9.设置变量
+==================
+选择10.27.36.152作为主机，并设置变量
+
+   
+            chmod 0600 /home/core/.ssh/deis  
+                    
+            eval `ssh-agent -s`  
+                    
+            ssh-add ~/.ssh/deis  
+                    
+            export DEISCTL_TUNNEL=192.168.1.104
+                    
+            eisctl config platform set sshPrivateKey=~/.ssh/deis
+                    
+            deisctl config platform set domain=example.com  
+    
+
+10.部署deis
 ===================
     deisctl install platform
     如果无法安装，需要先deisctl refresh-units下载service，需要网络
@@ -194,18 +224,27 @@ deis paas的环境部署
     deis-store-volume.service	d04f30aa.../10.27.36.152	loaded	active	running
     deis-store-volume.service	d6d6e4cc.../10.27.36.158	loaded	active	running
 
-9. 常用命令举例
+11. 常用命令举例
+===========================
        deisctl list列出组件
+
        deisctl restart builder重启builder组件
+       
        deisctl start builder启动builder组件
+       
       
        journalctl -u deis-store-monitor -f
+       
        cat /var/lib/log/deis/...
+       
        fleetctl list-units此处科员查看service情况和对应的
       
        查看ceph信息
+       
        nse deis-store-monitor
        ceph -s
+
+
 
 
   
