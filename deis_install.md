@@ -35,6 +35,7 @@ deis paas的环境部署
     docker pull 10.19.95.125/deis/builder:v1.0.2下载镜像
 
 3.官网下载deis组件到私有仓库
+===============================
 
     deis/logger      1 docker pull deis/logger:v1.0.2
 
@@ -42,7 +43,7 @@ deis paas的环境部署
 
     deis/controller  1       docker pull deis/controller:v1.0.2
 
-    deisilder   docker pull deis/builder:v1.0.2  需要自己编译
+    deis/builder   docker pull deis/builder:v1.0.2  需要自己编译
 
     deis/data   1 docker pull deis/data
 
@@ -64,7 +65,13 @@ deis paas的环境部署
 
     deis/store-monitor  1 docker pull deis/store-monitor:v1.0.2  
 
-     deis/store-daemon 1 docker pull deis/store-daemon:v1.0.2  
+    deis/store-daemon 1 docker pull deis/store-daemon:v1.0.2  
+    
+     将下载好的镜像全部打上标记，push到本地仓库
+  
+4. 配置dns信息，参照dns文档
+===========================
+配置完成后用nslookup查看是否配置正确
 
 
 
