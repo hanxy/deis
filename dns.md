@@ -41,7 +41,7 @@ vi /etc/bind/db.deis.suning
     
 反向解析：
     
-        ;
+    ;
         
     ; BIND reverse data file for dev domains
     
