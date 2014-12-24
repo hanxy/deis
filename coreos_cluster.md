@@ -62,7 +62,7 @@ coreos-install修改:
 
 4.安装coreos
 ==============================================================================
-./coreos-install -d /dev/sda -C stable -c ./deis_config.yaml 
+     ./coreos-install -d /dev/sda -C stable -c ./deis_config.yaml 
 
 
     
