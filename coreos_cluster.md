@@ -52,8 +52,12 @@ deis_config.yaml修改：
       ....
  
  根据需要你需要修改你的镜像pull，push的路由地址
-  Environment="DOCKER_OPTS=--insecure-registry 10.19.95.0/24 --insecure-registry 172.16.0.0/24  --insecure-registry 
-  10.27.36.0/24"
+     Environment="DOCKER_OPTS=--insecure-registry 10.19.95.0/24 --insecure-registry 172.16.0.0/24  --insecure-registry
+     10.27.36.0/24"
+     
+     ssh-authorized-keys:
+     此处修改为你自己的公钥
+     
 
 coreos-install修改:
 
