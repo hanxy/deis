@@ -2,12 +2,12 @@ deis paas的环境部署
 ==================
 
 在做paas之前你得准备好apache离线下载服务器，本地docker的registry私有仓库,查看etcd是否配置成功
-   fleetctl list-machines 
-   如果看到
-   10.27.36.152
-   10.27.36.154
-   10.27.36.158
-   诸如上述的coreos集群ip地址表示coreos集群没有问题
+     fleetctl list-machines 
+     如果看到
+     10.27.36.152
+     10.27.36.154
+     10.27.36.158
+     诸如上述的coreos集群ip地址表示coreos集群没有问题
 
 1.准备apache服务
 ===============
@@ -17,23 +17,23 @@ deis paas的环境部署
 
   这边可以直接docker pull registry去官网直接pull一个镜像
 
-  创建一个存储镜像的目录
+  1)创建一个存储镜像的目录
   
     mkdir -p docker-image
 
-  配置docker的初始化选项,主要配置镜像服务路由地址
+  2)配置docker的初始化选项,主要配置镜像服务路由地址
   
     --insecure-registry 10.0.0.0/8  --insecure-registry 10.19.95.0/24 --insecure-registry 172.16.0.0/16  
   
     --insecure-registry 10.27.36.0/24
   
-  运行registry
+  3)运行registry
 
     docker run -d -p 22000:22  -p 0.0.0.0:5000:5000  -v /opt/docker-image:/opt/docker-image -e    
   
     DOCKER_REGISTRY_CONFIG=/opt/docker-image/registry-config/config.yml -e STORAGE_PATH=/opt/docker-image registry
  
-  标记一个tag
+  4)标记一个tag
     docker tag imageID 10.19.95.125/deis/builder:v1.0.2
   
     docker push 10.19.95.125/deis/builder:v1.0.2上传镜像到私有仓库服务器
@@ -77,11 +77,11 @@ deis paas的环境部署
   
 4. 配置dns信息，参照dns文档
 ===========================
-   配置完成后用nslookup查看是否配置正确
+     配置完成后用nslookup查看是否配置正确
 
 5. 上传deis,deis.pub到coreos .ssh目录
 ==========================================
-   chmod 0600 deis
+     chmod 0600 deis
 
 6.搭建git服务器
 =========================================
@@ -125,9 +125,9 @@ deis paas的环境部署
 7.修改编译buildpack源代码
 ===============================
 1). 官网镜像到私有仓库
-   docker pull progrium/cedarish
+     docker pull progrium/cedarish
 
-   导出镜像文件为progrium_cedarish.tar放入deis-1.0.2/builder目录下面
+     导出镜像文件为progrium_cedarish.tar放入deis-1.0.2/builder目录下面
 
 2).修改Dockerfile
    # HACK: import progrium/cedarish as a tarball
@@ -138,11 +138,11 @@ deis paas的环境部署
     RUN curl -sSL -o /usr/local/bin/etcdctl https://s3-us-west-2.amazonaws.com/opdemand/etcdctl-v0.4.6 \
     && chmod +x /usr/local/bin/etcdctl ==>> 
    
-   RUN curl -sSL -o /usr/local/bin/etcdctl http://192.168.1.103/opdemand/etcdctl-v0.4.6 \
-    && chmod +x /usr/local/bin/etcdctl
+     RUN curl -sSL -o /usr/local/bin/etcdctl http://192.168.1.103/opdemand/etcdctl-v0.4.6 \
+     && chmod +x /usr/local/bin/etcdctl
     
 3).修改slugbuilder,slugrunner
-   FROM progrium/cedarish ===> FROM 10.19.95.125:5000/progrium/cedarish:latest
+     FROM progrium/cedarish ===> FROM 10.19.95.125:5000/progrium/cedarish:latest
   
 4). 修改boot文件,根据需要修改镜像设置
     spawn a docker daemon to run builds
@@ -195,17 +195,17 @@ deis paas的环境部署
     deis-store-volume.service	d6d6e4cc.../10.27.36.158	loaded	active	running
 
 9. 常用命令举例
-deisctl list列出组件
-deisctl restart builder重启builder组件
-deisctl start builder启动builder组件
-
-journalctl -u deis-store-monitor -f
-cat /var/lib/log/deis/...
-fleetctl list-units此处科员查看service情况和对应的
-
-查看ceph信息
-nse deis-store-monitor
-ceph -s
+      deisctl list列出组件
+      deisctl restart builder重启builder组件
+      deisctl start builder启动builder组件
+      
+      journalctl -u deis-store-monitor -f
+      cat /var/lib/log/deis/...
+      fleetctl list-units此处科员查看service情况和对应的
+      
+      查看ceph信息
+      nse deis-store-monitor
+      ceph -s
 
 
   
