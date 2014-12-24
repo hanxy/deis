@@ -16,8 +16,11 @@ vi /etc/systemd/network/static.network
 Name=ens32(网卡的名称可以用ifconfig查看)
 
 [Network]
+
 Address=10.27.36.152/24
+
 Gateway=10.27.36.254
+
 DNS=10.27.36.202
  
 systemctl restart systemd-networkd重启网络即可
@@ -31,19 +34,26 @@ systemctl restart systemd-networkd重启网络即可
 3.下载配置文件到coreos本地
 ==============================================================================
 wget 10.27.36.102/deis_config.yaml
+
 wget 10.27.36.102/coreos-install
 
 deis_config.yaml修改：
+
 根据你需要设置的ip进行替换即可，如果需要配置peers也就是从etcd配置需加入：
+
 coreos:
+
   etcd:
+  
      peers: ip:7001
+     
     ....
 
 coreos-install修改:
-需要修改BASE_URL="http://10.27.36.102"
-这里根据你apache的服务器地址进行设置
 
+需要修改BASE_URL="http://10.27.36.102"
+
+这里根据你apache的服务器地址进行设置
 
 
 4.安装coreos
