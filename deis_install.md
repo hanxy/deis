@@ -2,12 +2,12 @@ deis paas的环境部署
 ==================
 
 在做paas之前你得准备好apache离线下载服务器，本地docker的registry私有仓库,查看etcd是否配置成功
-     fleetctl list-machines 
-     如果看到
-     10.27.36.152
-     10.27.36.154
-     10.27.36.158
-     诸如上述的coreos集群ip地址表示coreos集群没有问题
+          fleetctl list-machines 
+          如果看到
+          10.27.36.152
+          10.27.36.154
+          10.27.36.158
+          诸如上述的coreos集群ip地址表示coreos集群没有问题
 
 1.准备apache服务
 ===============
@@ -19,26 +19,26 @@ deis paas的环境部署
 
   1)创建一个存储镜像的目录
   
-    mkdir -p docker-image
+       mkdir -p docker-image
 
   2)配置docker的初始化选项,主要配置镜像服务路由地址
   
-    --insecure-registry 10.0.0.0/8  --insecure-registry 10.19.95.0/24 --insecure-registry 172.16.0.0/16  
+       --insecure-registry 10.0.0.0/8  --insecure-registry 10.19.95.0/24 --insecure-registry 172.16.0.0/16  
   
-    --insecure-registry 10.27.36.0/24
+       --insecure-registry 10.27.36.0/24
   
   3)运行registry
 
-    docker run -d -p 22000:22  -p 0.0.0.0:5000:5000  -v /opt/docker-image:/opt/docker-image -e    
+       docker run -d -p 22000:22  -p 0.0.0.0:5000:5000  -v /opt/docker-image:/opt/docker-image -e    
   
-    DOCKER_REGISTRY_CONFIG=/opt/docker-image/registry-config/config.yml -e STORAGE_PATH=/opt/docker-image registry
+       DOCKER_REGISTRY_CONFIG=/opt/docker-image/registry-config/config.yml -e STORAGE_PATH=/opt/docker-image registry
  
   4)标记一个tag
-    docker tag imageID 10.19.95.125/deis/builder:v1.0.2
+       docker tag imageID 10.19.95.125/deis/builder:v1.0.2
   
-    docker push 10.19.95.125/deis/builder:v1.0.2上传镜像到私有仓库服务器
+       docker push 10.19.95.125/deis/builder:v1.0.2上传镜像到私有仓库服务器
   
-    docker pull 10.19.95.125/deis/builder:v1.0.2下载镜像
+       docker pull 10.19.95.125/deis/builder:v1.0.2下载镜像
 
 3.官网下载deis组件到私有仓库
 ===============================
@@ -195,17 +195,17 @@ deis paas的环境部署
     deis-store-volume.service	d6d6e4cc.../10.27.36.158	loaded	active	running
 
 9. 常用命令举例
-      deisctl list列出组件
-      deisctl restart builder重启builder组件
-      deisctl start builder启动builder组件
+       deisctl list列出组件
+       deisctl restart builder重启builder组件
+       deisctl start builder启动builder组件
       
-      journalctl -u deis-store-monitor -f
-      cat /var/lib/log/deis/...
-      fleetctl list-units此处科员查看service情况和对应的
+       journalctl -u deis-store-monitor -f
+       cat /var/lib/log/deis/...
+       fleetctl list-units此处科员查看service情况和对应的
       
-      查看ceph信息
-      nse deis-store-monitor
-      ceph -s
+       查看ceph信息
+       nse deis-store-monitor
+       ceph -s
 
 
   
