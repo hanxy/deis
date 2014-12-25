@@ -162,16 +162,27 @@ deis paas的环境部署
     
 5). 修改install-buildpacks 脚本，并更改为自己的提交id    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-multi.git         378c1a
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-ruby.git           d9472e
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-nodejs.git         551566
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-java.git           4b92d8
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-gradle.git         f21ed3
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-grails.git         958890
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-play.git           843fb3
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-python.git         e69472
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-php.git            fe2ead
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-clojure.git        c56d22
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-scala.git          8909b6
+                    
                     download_buildpack http://admin@10.27.36.105:8080/r/heroku-buildpack-go.git             f5cc3b
 
 6). make build执行编译，如果没有make命令直接将编译好的make copy到本地编译即可，并push本地仓库
